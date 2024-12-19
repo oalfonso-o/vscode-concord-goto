@@ -2,7 +2,9 @@
   "name": "concord-goto",
   "displayName": "concord-goto",
   "description": "",
-  "version": "0.0.1",
+  "author": "Oriol Alfonso",
+  "license": "Apache-2.0",
+  "version": "1.0.0",
   "engines": {
     "vscode": "^1.96.0"
   },
