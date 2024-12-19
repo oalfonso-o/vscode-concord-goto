@@ -1,4 +1,4 @@
-# Concord-GoTo README
+# Concord-GoTo VSCode Extension
 
 Adds a Definition Provider to be able to "GO TO" each flow definition
 
