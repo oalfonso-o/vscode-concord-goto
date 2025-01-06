@@ -16,6 +16,10 @@ Not known yet, but the approach is super simple, maybe some Go To definitions do
 
 ## Release Notes
 
+### 1.0.1
+
+Allow finding flows when they are called with the prefix "flow: *"
+
 ### 1.0.0
 
 Initial release of Concord-GoTo

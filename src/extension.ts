@@ -13,7 +13,7 @@ export class Provider {
   provideDefinition(document: vscode.TextDocument, position: vscode.Position) {
     const start = performance.now()
     const importLine = document.lineAt(position)
-    if (importLine.text.includes("call: ")) {
+    if (importLine.text.includes("call: ") || importLine.text.includes("flow: ")) {
 		  const flowName = document.getText(document.getWordRangeAtPosition(position)).split(/\r?\n/)[0];
       const flowFlag = flowName + ":"
       console.log("Flow name: ", flowName)

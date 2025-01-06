@@ -1,11 +1,5 @@
 {
 	"compilerOptions": {
-		// "module": "commonjs",
-		// "target": "es2018",
-		// "outDir": "out",
-		// "lib": [
-		// 	"es2018"
-		// ],
 		"module": "Node16",
 		"target": "ES2022",
 		"outDir": "out",
