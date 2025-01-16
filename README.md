@@ -16,6 +16,12 @@ Not known yet, but the approach is super simple, maybe some Go To definitions do
 
 ## Release Notes
 
+### 1.1.0
+
+Add GoTo for some variables inside of the same file
+Find flow definition by exact match with two spaces prefix
+Add GoTo for "entryPoint:"
+
 ### 1.0.1
 
 Allow finding flows when they are called with the prefix "flow: *"
