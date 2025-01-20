@@ -16,6 +16,10 @@ Not known yet, but the approach is super simple, maybe some Go To definitions do
 
 ## Release Notes
 
+### 1.1.2
+
+Add GoTo for "flowName:"
+
 ### 1.1.1
 
 Fix: Remove hover (until it's implemented)

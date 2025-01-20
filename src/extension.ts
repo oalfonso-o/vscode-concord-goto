@@ -19,7 +19,7 @@ export class DefinitionProvider {
     const wordVarMatches = importLine.match(varRe)
     let locations: Array<vscode.Location> = [];
 
-    if (importLine.includes("call: ") || importLine.includes("flow: ") || importLine.includes("entryPoint: ")) {
+    if (importLine.includes("call: ") || importLine.includes("flow: ") || importLine.includes("entryPoint: ") || importLine.includes("flowName: ")) {
       const flowFlag = "  " + word + ":"
 
       let rootPath: string | undefined
