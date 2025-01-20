@@ -126,7 +126,7 @@ export class HoverProvider implements vscode.HoverProvider {
   provideHover(document: vscode.TextDocument, position: vscode.Position, token: vscode.CancellationToken): vscode.ProviderResult<vscode.Hover> {
     const word = document.getText(document.getWordRangeAtPosition(position));
     let text: string = ''
-    text += word
+    // text += word
     const contents = new vscode.MarkdownString(text);
     contents.isTrusted = true;
     return new vscode.Hover(contents);

@@ -16,6 +16,10 @@ Not known yet, but the approach is super simple, maybe some Go To definitions do
 
 ## Release Notes
 
+### 1.1.1
+
+Fix: Remove hover (until it's implemented)
+
 ### 1.1.0
 
 Add GoTo for some variables inside of the same file
