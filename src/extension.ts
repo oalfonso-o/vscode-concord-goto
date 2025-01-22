@@ -19,7 +19,13 @@ export class DefinitionProvider {
     const wordVarMatches = importLine.match(varRe)
     let locations: Array<vscode.Location> = [];
 
-    if (importLine.includes("call: ") || importLine.includes("flow: ") || importLine.includes("entryPoint: ") || importLine.includes("flowName: ")) {
+    if (
+      importLine.includes("call: ")
+      || importLine.includes("flow: ")
+      || importLine.includes("entryPoint: ")
+      || importLine.includes("flowName: ")
+      || (importLine.includes("<input") && importLine.includes('name="flow"'))
+    ) {
       const flowFlag = "  " + word + ":"
 
       let rootPath: string | undefined
@@ -136,21 +142,30 @@ export class HoverProvider implements vscode.HoverProvider {
 
 export function activate(context: vscode.ExtensionContext) {
 
-  const schema = {
+  const yamlSchema = {
     scheme: 'file',
     language: 'yaml'
   }
+  const htmlSchema = {
+    scheme: 'file',
+    language: 'html'
+  }
 
   const definitionProvider = new DefinitionProvider(context)
-  const definitionProviderRegistered = vscode.languages.registerDefinitionProvider(
-    schema,
+  const yamlDefinitionProviderRegistered = vscode.languages.registerDefinitionProvider(
+    yamlSchema,
     definitionProvider
   )
-  context.subscriptions.push(definitionProviderRegistered)
+  context.subscriptions.push(yamlDefinitionProviderRegistered)
+  const htmlDefinitionProviderRegistered = vscode.languages.registerDefinitionProvider(
+    htmlSchema,
+    definitionProvider
+  )
+  context.subscriptions.push(htmlDefinitionProviderRegistered)
 
   const hoverProvider = new HoverProvider()
   let hoverProviderRegistered = vscode.languages.registerHoverProvider(
-    schema,
+    yamlSchema,
     hoverProvider
   );
   context.subscriptions.push(hoverProviderRegistered);
