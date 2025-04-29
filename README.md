@@ -16,6 +16,10 @@ Not known yet, but the approach is super simple, maybe some Go To definitions do
 
 ## Release Notes
 
+### 1.1.4
+
+Add GoTo for py file
+
 ### 1.1.3
 
 Add GoTo for html forms

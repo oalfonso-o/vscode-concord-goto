@@ -17,6 +17,9 @@ export class DefinitionProvider {
     const word = document.getText(document.getWordRangeAtPosition(position)).split(/\r?\n/)[0];
     const varRe = "\\$\\{.*" + word.replace(".", "\\.") + ".*\\}"
     const wordVarMatches = importLine.match(varRe)
+    const pythonRe = "[^\\/]*\\.py"
+    const linePythonFileMatches = importLine.match(pythonRe)
+    const pythonFile = (linePythonFileMatches !== null && linePythonFileMatches.length > 0) ? true : false
     let locations: Array<vscode.Location> = [];
 
     if (
@@ -25,6 +28,7 @@ export class DefinitionProvider {
       || importLine.includes("entryPoint: ")
       || importLine.includes("flowName: ")
       || (importLine.includes("<input") && importLine.includes('name="flow"'))
+      || pythonFile === true
     ) {
       const flowFlag = "  " + word + ":"
 
@@ -36,24 +40,32 @@ export class DefinitionProvider {
         return undefined
       }
 
-      try{
+      try {
         const filesInDirectory = fs.readdirSync(rootPath, {
           encoding: "utf-8",
           recursive: true
         })
         for (const file of filesInDirectory) {
           const absolute = rootPath + "/" + file
-          if (!fs.statSync(absolute).isDirectory() && (absolute.endsWith("concord.yaml") || absolute.endsWith("concord.yml"))) {
-            // TODO: use async -> import { readFile } from 'fs/promises';
-            const fileContent: string[] = fs.readFileSync(absolute, 'utf-8').split(/\r?\n|\r|\n/g)
-            for (let lineIndex: number = 0; lineIndex < fileContent.length; lineIndex++) {
-              const lineContent: string = fileContent[lineIndex]
-              const charIndex: number = lineContent.indexOf(flowFlag)
-              if (charIndex >= 0 && lineContent.trimEnd() === flowFlag) {
-                const uri = vscode.Uri.parse(absolute)
-                const range = new vscode.Range(lineIndex, charIndex, lineIndex, charIndex + flowFlag.length)
-                const location = new vscode.Location(uri, range)
-                locations.push(location)
+          const fileName = file.substring(file.lastIndexOf("/") + 1, file.length)
+          if (!fs.statSync(absolute).isDirectory()) {
+            if (pythonFile === true && importLine.includes(fileName)) {
+              const uri = vscode.Uri.parse(absolute)
+              const position = new vscode.Position(0, 0)
+              const location = new vscode.Location(uri, position)
+              locations.push(location)
+
+            } else if (absolute.endsWith("concord.yaml") || absolute.endsWith("concord.yml")) {
+              const fileContent: string[] = fs.readFileSync(absolute, 'utf-8').split(/\r?\n|\r|\n/g)
+              for (let lineIndex: number = 0; lineIndex < fileContent.length; lineIndex++) {
+                const lineContent: string = fileContent[lineIndex]
+                const charIndex: number = lineContent.indexOf(flowFlag)
+                if (charIndex >= 0 && lineContent.trimEnd() === flowFlag) {
+                  const uri = vscode.Uri.parse(absolute)
+                  const range = new vscode.Range(lineIndex, charIndex, lineIndex, charIndex + flowFlag.length)
+                  const location = new vscode.Location(uri, range)
+                  locations.push(location)
+                }
               }
             }
           }
